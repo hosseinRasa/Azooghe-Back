@@ -36,7 +36,7 @@ export class AuthService {
 
     const accessToken = await this.jwtService.signAsync(
       { sub: user.id },
-      { secret: 'YOUR_ACCESS_SECRET', expiresIn: '10m' },
+      { secret: 'YOUR_ACCESS_SECRET', expiresIn: '60m' },
     );
 
     const refreshToken = await this.jwtService.signAsync(
@@ -52,7 +52,7 @@ export class AuthService {
   async refreshTokens(userId: number) {
     const accessToken = await this.jwtService.signAsync(
       { sub: userId },
-      { secret: 'YOUR_ACCESS_SECRET', expiresIn: '10m' },
+      { secret: 'YOUR_ACCESS_SECRET', expiresIn: '60m' },
     );
 
     const newRefreshToken = await this.jwtService.signAsync(

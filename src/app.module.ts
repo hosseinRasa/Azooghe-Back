@@ -11,6 +11,8 @@ import { ClientsModule } from './baseInformation/clients/clients.module';
 import { ServicesModule } from './baseInformation/services/services.module';
 import { UploadModule } from './upload/upload.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { ServiceChooseModule } from './service-choose/service-choose.module';
+import { WorkCentersModule } from './work-centers/work-centers.module';
 
 @Module({
   imports: [
@@ -36,6 +38,8 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
     ClientsModule,
     ServicesModule,
     UploadModule,
+    ServiceChooseModule,
+    WorkCentersModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -10,6 +10,7 @@ import { Services, ServicesDocument } from './schemas/services.schema';
 
 import { UpdateServicesDto } from './dto/services-update.dto';
 import { ServicesCreateDto } from './dto/services-create.dto';
+import { toJalali } from '../../common/utility/date';
 @Injectable()
 export class ServicesService {
   constructor(
@@ -26,14 +27,32 @@ export class ServicesService {
         return Services;
       } else return null;
     }
-    return await this.ServicesModel.find().lean().exec();
+    return await this.ServicesModel.find()
+      //.where({ expireDate: { $gte: toJalali(Date.now()) } })
+      .lean()
+      .exec();
+  }
+  async findAllNoExpired(serviceName?: string) {
+    console.log(serviceName);
+    if (serviceName) {
+      const Services = await this.ServicesModel.findOne({
+        serviceName: serviceName?.toLowerCase(),
+      }).exec();
+
+      if (Services) {
+        return Services;
+      } else return null;
+    }
+    return await this.ServicesModel.find()
+      .where({ expireDate: { $gte: toJalali(Date.now()) } })
+      .lean()
+      .exec();
   }
 
   async findById(id: string) {
     console.log(id);
-    const service = await this.ServicesModel.findById(id).exec();
-    const obj = service?.toObject();
-    return obj;
+    return await this.ServicesModel.findById(id).lean().exec();
+    // const obj = service?.toObject();
   }
 
   async create(

@@ -8,6 +8,8 @@ export class Organs {
   code: string;
   @Prop({ required: true })
   organName: string;
+  @Prop({ required: true })
+  organPhone: string;
 }
 
 export const OrgansSchema = SchemaFactory.createForClass(Organs);

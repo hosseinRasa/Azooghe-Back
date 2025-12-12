@@ -14,4 +14,10 @@ export class OrgansCreateDto {
   })
   @IsNotEmpty({ message: 'نام سازمان الزامی است' })
   organName: string;
+  @ApiProperty({
+    name: 'organPhone',
+    example: '25436', // default/example value shown in Swagger
+  })
+  @IsNotEmpty({ message: 'تلفن سازمان الزامی است' })
+  organPhone: string;
 }

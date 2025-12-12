@@ -42,6 +42,12 @@ export class ServicesController {
   findAll(@Query('serviceName') serviceName?: string) {
     return this.ServicesService.findAll(serviceName);
   }
+  @Get('getAllNoExpired')
+  @ApiQuery({ name: 'serviceName', required: false })
+  @AllowAnonymous()
+  findAllNoExpired(@Query('serviceName') serviceName?: string) {
+    return this.ServicesService.findAllNoExpired(serviceName);
+  }
   @AllowAnonymous()
   @Get(':id')
   findById(@Param('id') id: string) {

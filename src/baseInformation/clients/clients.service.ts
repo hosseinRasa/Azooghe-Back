@@ -15,17 +15,29 @@ export class ClientsService {
     if (description) {
       const Clients = await this.ClientsModel.findOne({
         description: description?.toLowerCase(),
-      });
+      })
+        .populate('organRef')
+        .populate('workCenterRef')
+        .lean()
+        .exec();
 
       if (Clients) {
         return Clients;
       } else return null;
     }
-    return await this.ClientsModel.find();
+    return await this.ClientsModel.find()
+      .populate('organRef')
+      .populate('workCenterRef')
+      .lean()
+      .exec();
   }
 
   async findById(id: string) {
-    return await this.ClientsModel.findById(id);
+    return await this.ClientsModel.findById(id)
+      .populate('organRef')
+      .populate('workCenterRef')
+      .lean()
+      .exec();
   }
 
   async create(ClientsCreateDto: ClientsCreateDto) {
