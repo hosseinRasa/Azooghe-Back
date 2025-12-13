@@ -59,4 +59,11 @@ export class ServicesCreateDto {
     required: false,
   })
   description?: string;
+
+  @ApiProperty({
+    name: 'likeCount',
+    example: '6', // default/example value shown in Swagger
+    required: false,
+  })
+  likeCount?: number;
 }

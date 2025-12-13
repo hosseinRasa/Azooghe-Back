@@ -34,6 +34,9 @@ export class Services {
   attachmentMimeType?: string;
   @Prop()
   attachmentFileName?: string;
+
+  @Prop()
+  likeCount?: number;
 }
 
 export const ServicesSchema = SchemaFactory.createForClass(Services);

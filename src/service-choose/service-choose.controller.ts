@@ -8,6 +8,7 @@ import {
   Get,
   Ip,
   Param,
+  ParseBoolPipe,
   Patch,
   Post,
   Query,
@@ -330,5 +331,41 @@ export class ServiceChooseController {
       nationalCode: serviceChooseCreateDto.nationalCode,
       clientIp: clientIp,
     };
+  }
+
+  @Patch('likeService/:id/:liked')
+  @AllowAnonymous()
+  @ApiConsumes('multipart/form-data')
+  async likeService(
+    @Param('id') id: string,
+    @Param('liked', ParseBoolPipe) liked: boolean,
+  ) {
+    const mainService = await this.servicesService.findById(id);
+    console.log(liked);
+    let newLikeCount: number = mainService?.likeCount as number;
+    console.log(newLikeCount);
+    if (liked) newLikeCount += 1;
+    else newLikeCount -= 1;
+
+    console.log('Rasdafaf  ' + newLikeCount);
+
+    // const client = await this.clientsService.findById(
+    //   updateServicesChooseDto.clientRef as string,
+    // );
+    // if (client?.nationalCode !== updateServicesChooseDto.nationalCode)
+    //   throw new Error('کد ملی وارد شده با پرسنل انتخاب شده مطابقت ندارد!');
+
+    // const clientIp =
+    //   req.headers['x-forwarded-for']?.toString().split(',')[0] ?? ip;
+    const updateServiceDto = new UpdateServicesDto();
+    //به روز رسانی انتخاب قبلی
+    const updated = await this.servicesService.update(id, {
+      ...updateServiceDto,
+      likeCount: newLikeCount,
+      //requesterIp: clientIp.replace('::ffff:', '').replace('::1', '127.0.0.1'),
+    });
+
+    return updated;
+    // Only return safe fields
   }
 }
